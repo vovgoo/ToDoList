@@ -2,6 +2,9 @@
 
 Welcome to the ToDo List Application repository! This is my first priject on progremming language Java! This project is a simple developed using Java technologies. The application utilizes JDBC for database connectivity, JavaFX for the user interface, and PostgreSQL as the backend database.
 
+## Application
+![Alt Text](https://i.yapx.cc/W3Vew.png)
+
 ## Features
 - **Task Management:** Create, update, and delete tasks effortlessly.
 - **User-Friendly Interface:** The JavaFX interface provides a seamless and intuitive user experience.
@@ -43,3 +46,15 @@ Make sure to replace `path/to/javafx-sdk` and `path/to/postgresql-driver.jar` wi
 ```java
   private final Connection conn = db.connect_to_db("YOUR_TABLENAME", "YOUR_USERNAME", "YOUR_PASSWORD");
 ```
+
+# Tags
+- **Java**
+- **JavaFX**
+- **JDBC**
+- **PostgreSQL**
+- **ToDoList**
+- **TaskManagement**
+- **TaskTracker**
+- **ProjectManagement**
+- **Database**
+- **UserInterface**
