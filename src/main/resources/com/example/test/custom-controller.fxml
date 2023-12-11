@@ -17,7 +17,7 @@
       </font>
    </TextField>
    <Pane prefHeight="74.0" prefWidth="22.0" style="-fx-background-color: white;"/>
-   <Button fx:id="update_button" mnemonicParsing="false" text="Сохранить"  onAction="#update_task_handler" textFill="WHITE"/>
+   <Button fx:id="update_button" mnemonicParsing="false" text="Save"  onAction="#update_task_handler" textFill="WHITE"/>
    <Pane prefHeight="74.0" prefWidth="23.0" style="-fx-background-color: white;"/>
-   <Button mnemonicParsing="false" text="Удалить" onAction="#delete_task_handler" textFill="WHITE"/>
+   <Button mnemonicParsing="false" text="Remove" onAction="#delete_task_handler" textFill="WHITE"/>
 </fx:root>
