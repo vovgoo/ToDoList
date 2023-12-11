@@ -4,7 +4,7 @@ Welcome to the ToDo List Application repository! 🚀 This is my first project i
 
 ## Application
 <p align="center">
-  <img src="https://i.imgur.com/Bc2pb0D.png">
+  <img src="https://i.imgur.com/GdIT8G2.png">
 </p>
 
 ## Features
