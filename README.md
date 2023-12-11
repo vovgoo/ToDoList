@@ -4,6 +4,9 @@ Welcome to the ToDo List Application repository! 🚀 This is my first project i
 
 ## Application
 ![ToDo List App](https://i.imgur.com/Bc2pb0D.png)
+<p align="center">
+  <img width="460" height="300" src="https://i.imgur.com/Bc2pb0D.png">
+</p>
 
 ## Features
 - **Task Management:** Create, update, and delete tasks effortlessly. ✅
