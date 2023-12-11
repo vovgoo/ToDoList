@@ -25,7 +25,7 @@ Welcome to the ToDo List Application repository! 🚀 This is my first project i
 ### Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/vovgoo/todo-list.git
+    git clone https://github.com/vovgoo/ToDoList.git
     cd todo-list
     ```
 
