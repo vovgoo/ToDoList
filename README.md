@@ -3,9 +3,8 @@
 Welcome to the ToDo List Application repository! 🚀 This is my first project in the Java programming language! 🎉 This project is a simple task management application developed using Java technologies. The application utilizes JDBC for database connectivity, JavaFX for the user interface, and PostgreSQL as the backend database.
 
 ## Application
-![ToDo List App](https://i.imgur.com/Bc2pb0D.png)
 <p align="center">
-  <img width="460" height="300" src="https://i.imgur.com/Bc2pb0D.png">
+  <img src="https://i.imgur.com/Bc2pb0D.png">
 </p>
 
 ## Features
