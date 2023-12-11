@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<?import javafx.scene.control.TextField?>
+<fx:root type="javafx.scene.layout.HBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+         minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="74.0" prefWidth="468.0"
+         style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml">
+   <TextField styleClass="text-field" fx:id="task_name" prefHeight="20.0" prefWidth="243.0" style="-fx-background-color: white;"
+          text="Задание какое то">
+      <font>
+         <Font size="14.0"/>
+      </font>
+   </TextField>
+   <Pane prefHeight="74.0" prefWidth="22.0" style="-fx-background-color: white;"/>
+   <Button fx:id="update_button" mnemonicParsing="false" text="Сохранить"  onAction="#update_task_handler" textFill="WHITE"/>
+   <Pane prefHeight="74.0" prefWidth="23.0" style="-fx-background-color: white;"/>
+   <Button mnemonicParsing="false" text="Удалить" onAction="#delete_task_handler" textFill="WHITE"/>
+</fx:root>

@@ -1,0 +1,30 @@
+@font-face {
+    font-family: 'Montserrat Bold';
+    src: url('fonts/Montserrat-Bold.ttf');
+}
+
+.label {
+    -fx-font-family: 'Montserrat Bold';
+    -fx-font-size: 36;
+}
+
+.button .text {
+    -fx-font-family: 'Montserrat Bold';
+}
+
+.button {
+    -fx-background-color: #fe5300;
+}
+
+.button:hover{
+    -fx-background-color: #ff7733;
+}
+
+.button:pressed{
+    -fx-background-color: #fe5300;
+}
+
+.text-field{
+    -fx-font-family: 'Montserrat Bold';
+    -fx-font-size: 14;
+}
