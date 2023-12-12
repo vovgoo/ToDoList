@@ -52,7 +52,7 @@ public class HelloController {
     }
 
     @FXML
-    protected void add_tasks_handler(ActionEvent event)
+    protected void addTasksHandler(ActionEvent event)
     {
         if (!task_field.getText().trim().isEmpty() && task_field.getText().length() <= 26) {
             TaskController task = new TaskController(task_field.getText(), db.getMaxId(conn), conn, db);
