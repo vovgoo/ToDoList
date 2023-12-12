@@ -1,14 +1,13 @@
 package com.example.test;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -24,19 +23,22 @@ public class TaskController extends HBox {
 
     private int id = -1;
 
-    private Connection conn = null;
+    private final Connection conn;
 
-    private FunctionsDB db = null;
+    private final FunctionsDB db;
 
-    public TaskController(String task_text, int _id, Connection _conn, FunctionsDB _db) {
+    public TaskController(String task_text, int _id, Connection _conn, FunctionsDB _db)
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("custom-controller.fxml"));
-        try {
+        try
+        {
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
             task_name.setText(task_text);
             update_button.setVisible(false);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -55,15 +57,17 @@ public class TaskController extends HBox {
         });
 
     }
+
     @FXML
-    protected void delete_task_handler(ActionEvent event){
+    protected void deleteTaskHandler(ActionEvent event)
+    {
         Statement statement;
-        try{
+        try {
             String query = "DELETE FROM tasks WHERE id = " + id;
             statement = conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Task removed successful.");
-        } catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         FlowPane parentContainer = (FlowPane) getParent();
@@ -71,7 +75,8 @@ public class TaskController extends HBox {
     }
 
     @FXML
-    protected void update_task_handler(ActionEvent event){
+    protected void updateTaskHandler(ActionEvent event)
+    {
         Statement statement;
         try {
             String query = "UPDATE tasks SET task = '" + task_name.getText() + "' WHERE id = " + id;
@@ -79,7 +84,8 @@ public class TaskController extends HBox {
             statement.executeUpdate(query);
             update_button.setVisible(false);
             System.out.println("Data update successful");
-        } catch(Exception ex){
+        }
+        catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
