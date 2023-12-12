@@ -31,13 +31,11 @@ public class HelloController {
     private TextField task_field;
 
     @FXML
-    public void initialize()
-    {
+    public void initialize() {
         db.createTable(conn);
         Statement statement;
         ResultSet rs = null;
-        try
-        {
+        try {
             String query = "SELECT * FROM tasks";
             statement = conn.createStatement();
             rs = statement.executeQuery(query);
@@ -52,8 +50,7 @@ public class HelloController {
     }
 
     @FXML
-    protected void addTasksHandler(ActionEvent event)
-    {
+    protected void addTasksHandler(ActionEvent event) {
         if (!task_field.getText().trim().isEmpty() && task_field.getText().length() <= 26) {
             TaskController task = new TaskController(task_field.getText(), db.getMaxId(conn), conn, db);
             tasks.getChildren().add(task);

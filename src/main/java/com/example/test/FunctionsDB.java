@@ -6,8 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class FunctionsDB {
-    public Connection connectToDB(String dbname, String user, String password)
-    {
+    public Connection connectToDB(String dbname, String user, String password) {
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, password);
