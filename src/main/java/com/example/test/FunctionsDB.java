@@ -1,68 +1,62 @@
 package com.example.test;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class FunctionsDB {
-    public Connection connectToDB(String dbname, String user, String password) {
+    private static final Connection conn = connectToDB("javafx_todo", "postgres", "postgres");
+
+    public static Connection getConnection(){
+        return conn;
+    }
+
+    public static Connection connectToDB(String dbname, String user, String password) {
         try {
-            Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, password);
-            System.out.println("Connection to the database.");
-            return conn;
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, password);
         } catch (Exception ex) {
-            System.out.println("Error connecting to the database: " + ex.getMessage());
             throw new RuntimeException("Error connecting to the database.", ex);
         }
     }
 
-    public void createTable(Connection conn) {
+    public static void createTable() {
         try {
-            String query = "CREATE TABLE IF NOT EXISTS tasks (id SERIAL PRIMARY KEY, task VARCHAR(255));";
             Statement statement = conn.createStatement();
-            statement.executeUpdate(query);
-            System.out.println("Table with tasks created!");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS tasks (id SERIAL PRIMARY KEY, task VARCHAR(255));");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
         }
     }
 
-    public void insertTask(Connection conn, String task) {
-        try {
-            String query = "INSERT INTO tasks (task) VALUES ('" + task + "')";
-            Statement statement = conn.createStatement();
-            statement.executeUpdate(query);
-            System.out.println("Data insert to tables.");
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+    public static void insertTask(String task) {
+        String sql = "INSERT INTO tasks (task) VALUES (?)";
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, task);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error inserting task into the database", ex);
         }
     }
 
-    public int getMaxId(Connection conn) {
+    public static int getMaxId() {
         try {
-            String query = "SELECT MAX(id) FROM tasks";
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery("SELECT MAX(id) FROM tasks");
             if (rs.next())
                 return rs.getInt(1);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
         }
         return -1;
     }
 
-    public String getNameById(Connection conn, int id) {
+    public static String getNameById(int id) {
         try {
-            String query = "SELECT task FROM tasks WHERE id = " + id;
             Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery("SELECT task FROM tasks WHERE id = " + id);
             if (rs.next()) {
                 return rs.getString(1);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
         }
         return "None";
     }
