@@ -6,8 +6,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class HelloController {
 
@@ -21,7 +20,13 @@ public class HelloController {
 
     @FXML
     public void initialize() {
-        this.database = new DatabaseHandler("javafx_todo", "postgres", "postgres");
+        try {
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "javafx_todo", "postgres", "postgres");
+            this.database = new DatabaseHandler(conn);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         database.createTable();
         try {
             Statement statement = database.getConnection().createStatement();
