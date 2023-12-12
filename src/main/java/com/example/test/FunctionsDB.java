@@ -3,13 +3,17 @@ package com.example.test;
 import java.sql.*;
 
 public class FunctionsDB {
-    private static final Connection conn = connectToDB("javafx_todo", "postgres", "postgres");
 
-    public static Connection getConnection(){
+    public FunctionsDB(String table, String login, String pass){
+        this.conn = connectToDB(table, login, pass);
+    }
+    private final Connection conn;
+
+    public Connection getConnection(){
         return conn;
     }
 
-    public static Connection connectToDB(String dbname, String user, String password) {
+    public Connection connectToDB(String dbname, String user, String password) {
         try {
             return DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, password);
         } catch (Exception ex) {
@@ -17,7 +21,7 @@ public class FunctionsDB {
         }
     }
 
-    public static void createTable() {
+    public void createTable() {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS tasks (id SERIAL PRIMARY KEY, task VARCHAR(255));");
@@ -26,7 +30,7 @@ public class FunctionsDB {
         }
     }
 
-    public static void insertTask(String task) {
+    public void insertTask(String task) {
         String sql = "INSERT INTO tasks (task) VALUES (?)";
         try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
             preparedStatement.setString(1, task);
@@ -36,7 +40,7 @@ public class FunctionsDB {
         }
     }
 
-    public static int getMaxId() {
+    public int getMaxId() {
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT MAX(id) FROM tasks");
@@ -48,7 +52,7 @@ public class FunctionsDB {
         return -1;
     }
 
-    public static String getNameById(int id) {
+    public String getNameById(int id) {
         try {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery("SELECT task FROM tasks WHERE id = " + id);

@@ -17,14 +17,17 @@ public class HelloController {
     @FXML
     private TextField task_field;
 
+    private FunctionsDB database;
+
     @FXML
     public void initialize() {
-        FunctionsDB.createTable();
+        this.database = new FunctionsDB("javafx_todo", "postgres", "postgres");
+        database.createTable();
         try {
-            Statement statement = FunctionsDB.getConnection().createStatement();
+            Statement statement = database.getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
             while (rs.next()) {
-                TaskController task = new TaskController(rs.getString("task"), rs.getInt("id"));
+                TaskController task = new TaskController(rs.getString("task"), rs.getInt("id"), database);
                 tasks.getChildren().add(task);
             }
         }
@@ -36,9 +39,9 @@ public class HelloController {
     @FXML
     protected void addTasksHandler() {
         if (!task_field.getText().trim().isEmpty() && task_field.getText().length() <= 26) {
-            TaskController task = new TaskController(task_field.getText(), FunctionsDB.getMaxId() + 1);
+            TaskController task = new TaskController(task_field.getText(), database.getMaxId() + 1, database);
             tasks.getChildren().add(task);
-            FunctionsDB.insertTask(task_field.getText());
+            database.insertTask(task_field.getText());
             this.task_field.setText("");
         }
         else {

@@ -19,9 +19,11 @@ public class TaskController extends HBox {
     @FXML
     private Button update_button;
 
+    private final FunctionsDB database;
+
     private final int id;
 
-    public TaskController(String task_text, int _id) {
+    public TaskController(String task_text, int _id, FunctionsDB _database) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("custom-controller.fxml"));
         try {
             loader.setRoot(this);
@@ -35,6 +37,7 @@ public class TaskController extends HBox {
         }
 
         this.id = _id;
+        this.database = _database;
 
         task_name.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if (task_name.getText().length() >= 26) {
@@ -42,14 +45,14 @@ public class TaskController extends HBox {
             }
         });
 
-        task_name.textProperty().addListener((obs, oldVal, newVal) -> update_button.setVisible(!FunctionsDB.getNameById(id).equals(task_name.getText())));
+        task_name.textProperty().addListener((obs, oldVal, newVal) -> update_button.setVisible(!database.getNameById(id).equals(task_name.getText())));
 
     }
 
     @FXML
     protected void deleteTaskHandler() {
         try {
-            Statement statement = FunctionsDB.getConnection().createStatement();
+            Statement statement = database.getConnection().createStatement();
             statement.executeUpdate("DELETE FROM tasks WHERE id = " + id);
             FlowPane parentContainer = (FlowPane) getParent();
             parentContainer.getChildren().remove(this);
@@ -61,7 +64,7 @@ public class TaskController extends HBox {
     @FXML
     protected void updateTaskHandler() {
         try {
-            Statement statement = FunctionsDB.getConnection().createStatement();
+            Statement statement = database.getConnection().createStatement();
             statement.executeUpdate("UPDATE tasks SET task = '" + task_name.getText() + "' WHERE id = " + id);
             update_button.setVisible(false);
         }
