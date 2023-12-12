@@ -4,21 +4,13 @@ import java.sql.*;
 
 public class DatabaseHandler {
 
-    public DatabaseHandler(String table, String login, String pass){
-        this.conn = connectToDB(table, login, pass);
+    public DatabaseHandler(Connection _conn){
+        this.conn = _conn;
     }
     private final Connection conn;
 
     public Connection getConnection(){
-        return conn;
-    }
-
-    public Connection connectToDB(String dbname, String user, String password) {
-        try {
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, password);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error connecting to the database.", ex);
-        }
+        return this.conn;
     }
 
     public void createTable() {
