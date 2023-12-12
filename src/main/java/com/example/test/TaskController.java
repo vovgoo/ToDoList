@@ -19,11 +19,11 @@ public class TaskController extends HBox {
     @FXML
     private Button update_button;
 
-    private final FunctionsDB database;
+    private final DatabaseHandler database;
 
     private final int id;
 
-    public TaskController(String task_text, int _id, FunctionsDB _database) {
+    public TaskController(String task_text, int _id, DatabaseHandler _database) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("custom-controller.fxml"));
         try {
             loader.setRoot(this);

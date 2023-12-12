@@ -2,9 +2,9 @@ package com.example.test;
 
 import java.sql.*;
 
-public class FunctionsDB {
+public class DatabaseHandler {
 
-    public FunctionsDB(String table, String login, String pass){
+    public DatabaseHandler(String table, String login, String pass){
         this.conn = connectToDB(table, login, pass);
     }
     private final Connection conn;

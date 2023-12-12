@@ -17,11 +17,11 @@ public class HelloController {
     @FXML
     private TextField task_field;
 
-    private FunctionsDB database;
+    private DatabaseHandler database;
 
     @FXML
     public void initialize() {
-        this.database = new FunctionsDB("javafx_todo", "postgres", "postgres");
+        this.database = new DatabaseHandler("javafx_todo", "postgres", "postgres");
         database.createTable();
         try {
             Statement statement = database.getConnection().createStatement();
