@@ -20,7 +20,7 @@ public class TaskController extends HBox {
 
     private final DatabaseHandler database;
 
-    private final int id;
+    private int id;
 
     public TaskController(String taskText, int id, DatabaseHandler database) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("custom-controller.fxml"));
