@@ -24,13 +24,13 @@ public class DatabaseHandler {
         }
     }
 
-    public ArrayList<TaskController> getAllTask(){
-        ArrayList<TaskController> tasks = new ArrayList<>();
+    public ArrayList<Task> getAllTask(){
+        ArrayList<Task> tasks = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
             while (rs.next()) {
-                TaskController task = new TaskController(rs.getString("task"), rs.getInt("id"), this);
+                Task task = new Task(rs.getString("task"), rs.getInt("id"));
                 tasks.add(task);
             }
         }
