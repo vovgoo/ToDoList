@@ -23,6 +23,16 @@ public class DatabaseHandler {
         }
     }
 
+    public ResultSet getAllTask(){
+        try {
+            Statement statement = connection.createStatement();
+            return statement.executeQuery("SELECT * FROM tasks");
+        }
+        catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
     public void insertTask(String name) {
         String sql = "INSERT INTO tasks (task) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

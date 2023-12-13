@@ -11,7 +11,7 @@
 <?import com.example.test.TaskController?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test.HelloController">
    <children>
-      <TextField fx:id="task_field" layoutX="194.0" layoutY="115.0" promptText="Input your task..." style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px; -fx-border-width: 2px;">
+      <TextField fx:id="taskField" layoutX="194.0" layoutY="115.0" promptText="Input your task..." style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-radius: 3px; -fx-border-width: 2px;">
          <font>
             <Font name="Montserrat Bold" size="14.0" />
          </font>

@@ -14,7 +14,7 @@ public class HelloController {
     private FlowPane tasks;
 
     @FXML
-    private TextField task_field;
+    private TextField taskField;
 
     private DatabaseHandler database;
 
@@ -23,40 +23,35 @@ public class HelloController {
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "javafx_todo", "postgres", "postgres");
             this.database = new DatabaseHandler(conn);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
-        database.createTasksTable();
-        try {
-            Statement statement = database.getConnection().createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
+            database.createTasksTable();
+
+            ResultSet rs = database.getAllTask();
             while (rs.next()) {
                 TaskController task = new TaskController(rs.getString("task"), rs.getInt("id"), database);
                 tasks.getChildren().add(task);
             }
-        }
-        catch (Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @FXML
     protected void addTasksHandler() {
-        if (!task_field.getText().trim().isEmpty() && task_field.getText().length() <= 26) {
-            TaskController task = new TaskController(task_field.getText(), database.getMaxId() + 1, database);
+        if (!taskField.getText().trim().isEmpty() && taskField.getText().length() <= 26) {
+            TaskController task = new TaskController(taskField.getText(), database.getMaxId() + 1, database);
             tasks.getChildren().add(task);
-            database.insertTask(task_field.getText());
-            this.task_field.setText("");
+            database.insertTask(taskField.getText());
+            this.taskField.setText("");
         }
         else {
             Alert alert = new Alert(AlertType.INFORMATION);
-            if (task_field.getText().length() > 26) {
+            if (taskField.getText().length() > 26) {
                 alert.setAlertType(AlertType.CONFIRMATION);
                 alert.setTitle("Information message");
                 alert.setContentText("Your task is too long!");
                 alert.show();
-            } else if (task_field.getText().trim().isEmpty()) {
+            } else if (taskField.getText().trim().isEmpty()) {
                 alert.setAlertType(AlertType.CONFIRMATION);
                 alert.setTitle("Information message");
                 alert.setContentText("Your task input field is empty!");
