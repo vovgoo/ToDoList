@@ -7,8 +7,8 @@ public class DatabaseHandler {
 
     private final Connection connection;
 
-    public DatabaseHandler(Connection _conn) {
-        this.connection = _conn;
+    public DatabaseHandler(Connection conn) {
+        this.connection = conn;
     }
 
     public void createTasksTable() {

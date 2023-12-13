@@ -22,21 +22,21 @@ public class TaskController extends HBox {
 
     private final int id;
 
-    public TaskController(String task_text, int _id, DatabaseHandler _database) {
+    public TaskController(String taskText, int id, DatabaseHandler database) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("custom-controller.fxml"));
         try {
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
-            taskName.setText(task_text);
+            taskName.setText(taskText);
             updateButton.setVisible(false);
         }
         catch (IOException ex) {
             throw new RuntimeException(ex);
         }
 
-        this.id = _id;
-        this.database = _database;
+        this.id = id;
+        this.database = database;
 
         taskName.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             if (taskName.getText().length() >= 26) {
