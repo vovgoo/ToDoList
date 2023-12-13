@@ -20,7 +20,7 @@ public class DatabaseHandler {
         }
     }
 
-    public ArrayList<Task> getAllTask(){
+    public ArrayList<Task> getAllTask() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
@@ -47,7 +47,7 @@ public class DatabaseHandler {
         }
     }
 
-    public void removeTask(int id){
+    public void removeTask(int id) {
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM tasks WHERE id = " + id);
@@ -56,7 +56,7 @@ public class DatabaseHandler {
         }
     }
 
-    public void updateTask(String name, int id){
+    public void updateTask(String name, int id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tasks SET task = ? WHERE id = ?")) {
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, id);
