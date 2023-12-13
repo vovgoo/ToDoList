@@ -14,10 +14,10 @@ import java.sql.Statement;
 
 public class TaskController extends HBox {
     @FXML
-    private TextField task_name;
+    private TextField taskName;
 
     @FXML
-    private Button update_button;
+    private Button updateButton;
 
     private final DatabaseHandler database;
 
@@ -29,8 +29,8 @@ public class TaskController extends HBox {
             loader.setRoot(this);
             loader.setController(this);
             loader.load();
-            task_name.setText(task_text);
-            update_button.setVisible(false);
+            taskName.setText(task_text);
+            updateButton.setVisible(false);
         }
         catch (IOException ex) {
             throw new RuntimeException(ex);
@@ -39,13 +39,13 @@ public class TaskController extends HBox {
         this.id = _id;
         this.database = _database;
 
-        task_name.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            if (task_name.getText().length() >= 26) {
+        taskName.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            if (taskName.getText().length() >= 26) {
                 event.consume();
             }
         });
 
-        task_name.textProperty().addListener((obs, oldVal, newVal) -> update_button.setVisible(!database.getNameById(id).equals(task_name.getText())));
+        taskName.textProperty().addListener((obs, oldVal, newVal) -> updateButton.setVisible(!database.getNameById(id).equals(taskName.getText())));
 
     }
 
@@ -65,8 +65,8 @@ public class TaskController extends HBox {
     protected void updateTaskHandler() {
         try {
             Statement statement = database.getConnection().createStatement();
-            statement.executeUpdate("UPDATE tasks SET task = '" + task_name.getText() + "' WHERE id = " + id);
-            update_button.setVisible(false);
+            statement.executeUpdate("UPDATE tasks SET task = '" + taskName.getText() + "' WHERE id = " + id);
+            updateButton.setVisible(false);
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);

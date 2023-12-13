@@ -23,10 +23,10 @@ public class DatabaseHandler {
         }
     }
 
-    public void insertTask(String task) {
+    public void insertTask(String name) {
         String sql = "INSERT INTO tasks (task) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, task);
+            preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException("Error inserting task into the database", ex);
