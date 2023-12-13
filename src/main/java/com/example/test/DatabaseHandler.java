@@ -4,18 +4,19 @@ import java.sql.*;
 
 public class DatabaseHandler {
 
-    public DatabaseHandler(Connection _conn){
-        this.conn = _conn;
-    }
-    private final Connection conn;
+    private final Connection connection;
 
-    public Connection getConnection(){
-        return this.conn;
+    public DatabaseHandler(Connection _conn) {
+        this.connection = _conn;
     }
 
-    public void createTable() {
+    public Connection getConnection() {
+        return this.connection;
+    }
+
+    public void createTasksTable() {
         try {
-            Statement statement = conn.createStatement();
+            Statement statement = connection.createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS tasks (id SERIAL PRIMARY KEY, task VARCHAR(255));");
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -24,7 +25,7 @@ public class DatabaseHandler {
 
     public void insertTask(String task) {
         String sql = "INSERT INTO tasks (task) VALUES (?)";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, task);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -34,7 +35,7 @@ public class DatabaseHandler {
 
     public int getMaxId() {
         try {
-            Statement statement = conn.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT MAX(id) FROM tasks");
             if (rs.next())
                 return rs.getInt(1);
@@ -46,7 +47,7 @@ public class DatabaseHandler {
 
     public String getNameById(int id) {
         try {
-            Statement statement = conn.createStatement();
+            Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT task FROM tasks WHERE id = " + id);
             if (rs.next()) {
                 return rs.getString(1);

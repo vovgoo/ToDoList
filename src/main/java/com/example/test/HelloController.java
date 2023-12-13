@@ -27,7 +27,7 @@ public class HelloController {
             throw new RuntimeException(e);
         }
 
-        database.createTable();
+        database.createTasksTable();
         try {
             Statement statement = database.getConnection().createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
