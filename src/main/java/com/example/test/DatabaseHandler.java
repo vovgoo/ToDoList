@@ -1,8 +1,7 @@
 package com.example.test;
 
-import javafx.scene.layout.FlowPane;
-
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseHandler {
 
@@ -25,18 +24,21 @@ public class DatabaseHandler {
         }
     }
 
-    public void getAllTask(FlowPane tasks){
+    public ArrayList<TaskController> getAllTask(){
+        ArrayList<TaskController> tasks = new ArrayList<>();
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
             while (rs.next()) {
                 TaskController task = new TaskController(rs.getString("task"), rs.getInt("id"), this);
-                tasks.getChildren().add(task);
+                tasks.add(task);
             }
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+
+        return tasks;
     }
 
     public void insertTask(String name) {

@@ -24,8 +24,10 @@ public class HelloController {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "javafx_todo", "postgres", "postgres");
             this.database = new DatabaseHandler(conn);
             database.createTasksTable();
-            database.getAllTask(tasks);
-        } catch (SQLException e) {
+            for (TaskController task : database.getAllTask()) {
+                tasks.getChildren().add(task);
+            };
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
