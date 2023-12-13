@@ -11,10 +11,6 @@ public class DatabaseHandler {
         this.connection = _conn;
     }
 
-    public Connection getConnection() {
-        return this.connection;
-    }
-
     public void createTasksTable() {
         try {
             Statement statement = connection.createStatement();
@@ -48,6 +44,25 @@ public class DatabaseHandler {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException("Error inserting task into the database", ex);
+        }
+    }
+
+    public void removeTask(int id){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM tasks WHERE id = " + id);
+        } catch(Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void updateTask(String name, int id){
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE tasks SET task = ? WHERE id = ?")) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 

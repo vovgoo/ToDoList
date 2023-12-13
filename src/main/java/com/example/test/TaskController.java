@@ -9,7 +9,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.sql.Statement;
 
 
 public class TaskController extends HBox {
@@ -52,8 +51,7 @@ public class TaskController extends HBox {
     @FXML
     protected void deleteTaskHandler() {
         try {
-            Statement statement = database.getConnection().createStatement();
-            statement.executeUpdate("DELETE FROM tasks WHERE id = " + id);
+            database.removeTask(this.id);
             FlowPane parentContainer = (FlowPane) getParent();
             parentContainer.getChildren().remove(this);
         } catch (Exception ex) {
@@ -64,8 +62,7 @@ public class TaskController extends HBox {
     @FXML
     protected void updateTaskHandler() {
         try {
-            Statement statement = database.getConnection().createStatement();
-            statement.executeUpdate("UPDATE tasks SET task = '" + taskName.getText() + "' WHERE id = " + id);
+            database.updateTask(taskName.getText(), this.id);
             updateButton.setVisible(false);
         }
         catch (Exception ex) {
