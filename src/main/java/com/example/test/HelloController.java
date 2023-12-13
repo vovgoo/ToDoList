@@ -36,8 +36,8 @@ public class HelloController {
     @FXML
     protected void addTasksHandler() {
         if (!taskField.getText().trim().isEmpty() && taskField.getText().length() <= 26) {
-            database.insertTask(taskField.getText());
-            TaskController task = new TaskController(taskField.getText(), database.getMaxId(), database);
+            Task newTask = database.insertTask(taskField.getText());
+            TaskController task = new TaskController(newTask.getName(), newTask.getId(), database);
             tasks.getChildren().add(task);
             this.taskField.setText("");
         }

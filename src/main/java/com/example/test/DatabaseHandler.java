@@ -35,13 +35,18 @@ public class DatabaseHandler {
         return tasks;
     }
 
-    public void insertTask(String name) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tasks (task) VALUES (?)")) {
+    public Task insertTask(String name) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tasks (task) VALUES (?) RETURNING id;")) {
             preparedStatement.setString(1, name);
-            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                return new Task(name, rs.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+
+        return new Task("None", -1);
     }
 
     public void removeTask(int id) {
@@ -61,17 +66,6 @@ public class DatabaseHandler {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    public int getMaxId() {
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(id) FROM tasks")) {
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next())
-                return rs.getInt(1);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-        return -1;
     }
 
     public String getNameById(int id) {
