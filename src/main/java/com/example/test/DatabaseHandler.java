@@ -1,5 +1,7 @@
 package com.example.test;
 
+import javafx.scene.layout.FlowPane;
+
 import java.sql.*;
 
 public class DatabaseHandler {
@@ -23,10 +25,14 @@ public class DatabaseHandler {
         }
     }
 
-    public ResultSet getAllTask(){
+    public void getAllTask(FlowPane tasks){
         try {
             Statement statement = connection.createStatement();
-            return statement.executeQuery("SELECT * FROM tasks");
+            ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
+            while (rs.next()) {
+                TaskController task = new TaskController(rs.getString("task"), rs.getInt("id"), this);
+                tasks.getChildren().add(task);
+            }
         }
         catch (Exception ex) {
             throw new RuntimeException(ex);
