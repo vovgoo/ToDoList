@@ -12,9 +12,8 @@ public class DatabaseHandler {
     }
 
     public void createTasksTable() {
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS tasks (id SERIAL PRIMARY KEY, task VARCHAR(255));");
+        try (PreparedStatement preparedStatement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS tasks (id SERIAL PRIMARY KEY, task VARCHAR(255));")) {
+            preparedStatement.executeUpdate();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -22,9 +21,8 @@ public class DatabaseHandler {
 
     public ArrayList<Task> getAllTask() {
         ArrayList<Task> tasks = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM tasks");
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM tasks")) {
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Task task = new Task(rs.getString("task"), rs.getInt("id"));
                 tasks.add(task);
@@ -38,19 +36,18 @@ public class DatabaseHandler {
     }
 
     public void insertTask(String name) {
-        String sql = "INSERT INTO tasks (task) VALUES (?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tasks (task) VALUES (?)")) {
             preparedStatement.setString(1, name);
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            throw new RuntimeException("Error inserting task into the database", ex);
+            throw new RuntimeException(ex);
         }
     }
 
     public void removeTask(int id) {
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM tasks WHERE id = " + id);
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM tasks WHERE id = ?")) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
         } catch(Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -67,9 +64,8 @@ public class DatabaseHandler {
     }
 
     public int getMaxId() {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT MAX(id) FROM tasks");
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(id) FROM tasks")) {
+            ResultSet rs = preparedStatement.executeQuery();
             if (rs.next())
                 return rs.getInt(1);
         } catch (Exception ex) {
@@ -79,9 +75,9 @@ public class DatabaseHandler {
     }
 
     public String getNameById(int id) {
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT task FROM tasks WHERE id = " + id);
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT task FROM tasks WHERE id = ?")){
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 return rs.getString(1);
             }
