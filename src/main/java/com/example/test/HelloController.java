@@ -18,20 +18,14 @@ public class HelloController {
 
     public static final int TASk_SIZE = 26;
 
-    private DatabaseHandler database;
+    public static DatabaseHandler database;
 
     @FXML
     public void initialize() {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "javafx_todo", "postgres", "postgres");
-            this.database = new DatabaseHandler(conn);
-            database.createTasksTable();
-            for (Task task : database.getAllTask()) {
-                TaskController taskField = new TaskController(task.getName(), task.getId(), database);
-                tasks.getChildren().add(taskField);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        database.createTasksTable();
+        for (Task task : database.getAllTask()) {
+            TaskController taskField = new TaskController(task.getName(), task.getId(), database);
+            tasks.getChildren().add(taskField);
         }
     }
 
