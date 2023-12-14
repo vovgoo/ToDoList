@@ -42,7 +42,7 @@ public class TaskController extends HBox {
         this.originalName = taskText;
 
         taskName.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            if (taskName.getText().length() >= HelloController.taskSize) {
+            if (taskName.getText().length() >= HelloController.TASk_SIZE) {
                 event.consume();
             }
         });

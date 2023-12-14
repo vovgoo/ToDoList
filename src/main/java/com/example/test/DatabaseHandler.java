@@ -1,7 +1,9 @@
 package com.example.test;
 
 import java.sql.*;
+import java.util.List;
 import java.util.ArrayList;
+
 
 public class DatabaseHandler {
 
@@ -19,8 +21,8 @@ public class DatabaseHandler {
         }
     }
 
-    public ArrayList<Task> getAllTask() {
-        ArrayList<Task> tasks = new ArrayList<>();
+    public List<Task> getAllTask() {
+        List<Task> tasks = new ArrayList<>();
         try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM tasks")) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -40,7 +42,7 @@ public class DatabaseHandler {
             preparedStatement.setString(1, name);
             ResultSet rs = preparedStatement.executeQuery();
             rs.next();
-            return  new Task(name, rs.getInt(1));
+            return new Task(name, rs.getInt(1));
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

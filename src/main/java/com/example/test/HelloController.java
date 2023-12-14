@@ -16,7 +16,7 @@ public class HelloController {
     @FXML
     private TextField taskField;
 
-    public static final int taskSize = 26;
+    public static final int TASk_SIZE = 26;
 
     private DatabaseHandler database;
 
@@ -38,7 +38,7 @@ public class HelloController {
     @FXML
     protected void addTasksHandler() {
         String taskName = taskField.getText();
-        if (!taskName.isBlank() && taskName.length() <= 26) {
+        if (!taskName.isBlank() && taskName.length() <= TASk_SIZE) {
             Task newTask = database.insertTask(taskName);
             TaskController task = new TaskController(newTask.getName(), newTask.getId(), database);
             tasks.getChildren().add(task);
@@ -46,7 +46,7 @@ public class HelloController {
         }
         else {
             Alert alert = new Alert(AlertType.INFORMATION);
-            if (taskName.length() > taskSize) {
+            if (taskName.length() > TASk_SIZE) {
                 alert.setAlertType(AlertType.CONFIRMATION);
                 alert.setTitle("Information message");
                 alert.setContentText("Your task is too long!");
