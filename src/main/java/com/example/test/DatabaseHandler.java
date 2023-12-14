@@ -68,16 +68,4 @@ public class DatabaseHandler {
             throw new RuntimeException(ex);
         }
     }
-
-    public String getNameById(int id) {
-        String name = "None";
-        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT name FROM tasks WHERE id = ?")){
-            preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) name = rs.getString(1);
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        return name;
-    }
 }
