@@ -36,18 +36,14 @@ public class DatabaseHandler {
     }
 
     public Task insertTask(String name) {
-        Task task = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO tasks (name) VALUES (?) RETURNING id")) {
             preparedStatement.setString(1, name);
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()){
-                task =  new Task(name, rs.getInt(1));
-            }
+            rs.next();
+            return  new Task(name, rs.getInt(1));
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-
-        return task;
     }
 
     public void removeTask(int id) {
