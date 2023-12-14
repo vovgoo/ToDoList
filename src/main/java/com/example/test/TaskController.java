@@ -53,25 +53,16 @@ public class TaskController extends HBox {
 
     @FXML
     protected void deleteTaskHandler() {
-        try {
-            database.removeTask(this.id);
-            FlowPane parentContainer = (FlowPane) getParent();
-            parentContainer.getChildren().remove(this);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        database.removeTask(this.id);
+        FlowPane parentContainer = (FlowPane) getParent();
+        parentContainer.getChildren().remove(this);
     }
 
     @FXML
     protected void updateTaskHandler() {
-        try {
-            String taskText = taskName.getText();
-            database.updateTask(taskText, this.id);
-            this.originalName = taskText;
-            updateButton.setVisible(false);
-        }
-        catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        String taskText = taskName.getText();
+        database.updateTask(taskText, this.id);
+        this.originalName = taskText;
+        updateButton.setVisible(false);
     }
 }
