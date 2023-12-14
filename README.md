@@ -43,10 +43,10 @@ Make sure to replace `path/to/javafx-sdk` and `path/to/postgresql-driver.jar` wi
    - Username: `your_username`
    - Password: `your_password`
 
-2. Update the database connection details in `src/main/java/com/example/FunctionDB.java` with your PostgreSQL credentials.
+2. Update the database connection details in `src/main/java/com/example/controllers/HelloController.java` with your PostgreSQL credentials.
 
 ```java
-  private final Connection conn = db.connect_to_db("YOUR_TABLENAME", "YOUR_USERNAME", "YOUR_PASSWORD");
+Connection conn = DriverManager.getConnection(System.getenv("DB_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
 ```
 
 # Tags
