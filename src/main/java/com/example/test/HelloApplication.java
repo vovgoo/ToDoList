@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
         launch();
     }
 
-    public static DatabaseHandler database;
+    public DatabaseHandler database;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -28,6 +28,8 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+        HelloController controller = fxmlLoader.getController();
+        controller.setDatabaseHandler(database);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setTitle("To Do List in Java!");
         stage.setResizable(false);

@@ -18,11 +18,13 @@ public class TaskController extends HBox {
     @FXML
     private Button updateButton;
 
+    private DatabaseHandler database;
+
     private int id;
 
     private String originalName;
 
-    public TaskController(String taskText, int id) {
+    public TaskController(String taskText, int id, DatabaseHandler database) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("custom-controller.fxml"));
         try {
             loader.setRoot(this);
@@ -37,9 +39,10 @@ public class TaskController extends HBox {
 
         this.id = id;
         this.originalName = taskText;
+        this.database = database;
 
         taskName.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            if (taskName.getText().length() >= HelloController.TASk_SIZE) {
+            if (taskName.getText().length() >= HelloController.TASK_NAME_MAX_LENGTH) {
                 event.consume();
             }
         });
@@ -50,7 +53,7 @@ public class TaskController extends HBox {
 
     @FXML
     protected void deleteTaskHandler() {
-        HelloApplication.database.removeTask(this.id);
+        database.removeTask(this.id);
         FlowPane parentContainer = (FlowPane) getParent();
         parentContainer.getChildren().remove(this);
     }
@@ -58,7 +61,7 @@ public class TaskController extends HBox {
     @FXML
     protected void updateTaskHandler() {
         String taskText = taskName.getText();
-        HelloApplication.database.updateTask(taskText, this.id);
+        database.updateTask(taskText, this.id);
         this.originalName = taskText;
         updateButton.setVisible(false);
     }

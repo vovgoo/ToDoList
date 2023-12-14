@@ -14,29 +14,34 @@ public class HelloController {
     @FXML
     private TextField taskField;
 
-    public static final int TASk_SIZE = 26;
+    private DatabaseHandler database;
+
+    public static final int TASK_NAME_MAX_LENGTH = 26;
 
     @FXML
     public void initialize() {
-        HelloApplication.database.createTasksTable();
-        for (Task task : HelloApplication.database.getAllTask()) {
-            TaskController taskField = new TaskController(task.getName(), task.getId());
+        database.createTasksTable();
+        for (Task task : database.getAllTask()) {
+            TaskController taskField = new TaskController(task.getName(), task.getId(), database);
             tasks.getChildren().add(taskField);
         }
+    }
+
+    public void setDatabaseHandler(DatabaseHandler database) {
+        this.database = database;
     }
 
     @FXML
     protected void addTasksHandler() {
         String taskName = taskField.getText();
-        if (!taskName.isBlank() && taskName.length() <= TASk_SIZE) {
-            Task newTask = HelloApplication.database.insertTask(taskName);
-            TaskController task = new TaskController(newTask.getName(), newTask.getId());
+        if (!taskName.isBlank() && taskName.length() <= TASK_NAME_MAX_LENGTH) {
+            Task newTask = database.insertTask(taskName);
+            TaskController task = new TaskController(newTask.getName(), newTask.getId(), database);
             tasks.getChildren().add(task);
             this.taskField.setText("");
-        }
-        else {
+        } else {
             Alert alert = new Alert(AlertType.INFORMATION);
-            if (taskName.length() > TASk_SIZE) {
+            if (taskName.length() > TASK_NAME_MAX_LENGTH) {
                 alert.setAlertType(AlertType.CONFIRMATION);
                 alert.setTitle("Information message");
                 alert.setContentText("Your task is too long!");
