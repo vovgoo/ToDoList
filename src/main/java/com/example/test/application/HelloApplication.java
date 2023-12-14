@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.test.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,8 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
@@ -15,21 +13,10 @@ public class HelloApplication extends Application {
         launch();
     }
 
-    public DatabaseHandler database;
-
     @Override
     public void start(Stage stage) throws IOException {
-        try {
-            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "javafx_todo", "postgres", "postgres");
-            database = new DatabaseHandler(conn);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 700);
-        HelloController controller = fxmlLoader.getController();
-        controller.setDatabaseHandler(database);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setTitle("To Do List in Java!");
         stage.setResizable(false);

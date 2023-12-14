@@ -1,5 +1,6 @@
-package com.example.test;
+package com.example.test.controllers;
 
+import com.example.test.db.DatabaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;

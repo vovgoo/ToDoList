@@ -1,4 +1,4 @@
-package com.example.test;
+package com.example.test.model;
 
 public class Task {
     private final String name;

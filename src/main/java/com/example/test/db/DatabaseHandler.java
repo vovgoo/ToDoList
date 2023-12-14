@@ -1,4 +1,6 @@
-package com.example.test;
+package com.example.test.db;
+
+import com.example.test.model.Task;
 
 import java.sql.*;
 import java.util.List;

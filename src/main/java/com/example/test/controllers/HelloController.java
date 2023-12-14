@@ -1,10 +1,15 @@
-package com.example.test;
+package com.example.test.controllers;
 
+import com.example.test.db.DatabaseHandler;
+import com.example.test.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class HelloController {
 
@@ -14,21 +19,24 @@ public class HelloController {
     @FXML
     private TextField taskField;
 
-    private DatabaseHandler database;
-
     public static final int TASK_NAME_MAX_LENGTH = 26;
+
+    private DatabaseHandler database;
 
     @FXML
     public void initialize() {
+        try {
+            Connection conn = DriverManager.getConnection(System.getenv("DB_URL"), System.getenv("DB_USER"), System.getenv("DB_PASSWORD"));
+            this.database = new DatabaseHandler(conn);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         database.createTasksTable();
         for (Task task : database.getAllTask()) {
             TaskController taskField = new TaskController(task.getName(), task.getId(), database);
             tasks.getChildren().add(taskField);
         }
-    }
-
-    public void setDatabaseHandler(DatabaseHandler database) {
-        this.database = database;
     }
 
     @FXML
