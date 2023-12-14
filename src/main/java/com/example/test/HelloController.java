@@ -6,8 +6,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 
-import java.sql.*;
-
 public class HelloController {
 
     @FXML
@@ -18,13 +16,11 @@ public class HelloController {
 
     public static final int TASk_SIZE = 26;
 
-    public static DatabaseHandler database;
-
     @FXML
     public void initialize() {
-        database.createTasksTable();
-        for (Task task : database.getAllTask()) {
-            TaskController taskField = new TaskController(task.getName(), task.getId(), database);
+        HelloApplication.database.createTasksTable();
+        for (Task task : HelloApplication.database.getAllTask()) {
+            TaskController taskField = new TaskController(task.getName(), task.getId());
             tasks.getChildren().add(taskField);
         }
     }
@@ -33,8 +29,8 @@ public class HelloController {
     protected void addTasksHandler() {
         String taskName = taskField.getText();
         if (!taskName.isBlank() && taskName.length() <= TASk_SIZE) {
-            Task newTask = database.insertTask(taskName);
-            TaskController task = new TaskController(newTask.getName(), newTask.getId(), database);
+            Task newTask = HelloApplication.database.insertTask(taskName);
+            TaskController task = new TaskController(newTask.getName(), newTask.getId());
             tasks.getChildren().add(task);
             this.taskField.setText("");
         }

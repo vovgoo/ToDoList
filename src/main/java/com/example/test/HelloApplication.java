@@ -15,18 +15,19 @@ public class HelloApplication extends Application {
         launch();
     }
 
+    public static DatabaseHandler database;
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 700);
-
         try {
             Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + "javafx_todo", "postgres", "postgres");
-            HelloController.database = new DatabaseHandler(conn);
+            database = new DatabaseHandler(conn);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 700);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setTitle("To Do List in Java!");
         stage.setResizable(false);
